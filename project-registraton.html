@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practice</title>
+    <link rel="stylesheet" href="reg.css">
+</head>
+<body>
+    <form>
+    <div>
+     <h2>Student ID</h2>
+    </div>
+        <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+        </div>
+        <div>
+            <label for="roll_no">Roll Number:</label>
+            <input type="text" name="roll_no">
+        </div>
+         <div>
+             <label for="Dept">DEPT</label>
+            <select name="Dept" id="Dept">
+                <option value=""></option>
+                <option value="ECE">ECE</option>
+                <option value="CSE">CSE</option>
+                <option value="EEE">EEE</option>
+                <option value="CIVIL">CIVIL</option>
+                <option value="MECH">MECH</option>
+            </select>
+        </div>
+         <div>
+            <label for="mail">Email</label>
+            <input type="mail" name="Email" id="Email" required>
+        </div>
+        <div>
+            <label for="Username">Password</label>
+            <input type="Password" name="Password" id="Password"minlength="4">
+        </div>
+        <div>
+        <label for="language">Language</label>
+        <select name="language" id="language">
+            <option value=""></option>
+            <option value="Telugu">Telugu</option>
+            <option value="English">English</option>
+        </select>
+    </div>
+      <button type="submit" class="btn">Register</button>
+    </form>
+</body>
+</html>
