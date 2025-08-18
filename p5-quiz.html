@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    #quiz-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .option {
+      display: block;
+      margin: 10px 0;
+    }
+    #timer {
+      font-weight: bold;
+      color: red;
+    }
+  </style>    
+</head>
+<body>
+  <h1>Quiz Time</h1>
+  <div id="quiz-container">
+    <p id="question"></p>
+    <div id="options"></div>
+    <p>Time left: <span id="timer">10</span></p>
+    <p>Score: <span id="score">0</span></p>
+  </div><br>
+  <button onclick="startQuiz()">Start Quiz</button>
+  <button onclick="viewScore()">View score</button>
+
+<script>
+  const quizdata = [
+    {
+      question: "What is the capital of France?",
+      options: ["Berlin", "Madrid", "Paris", "Rome"],
+      answer: "Paris"
+    },
+    {
+      question: "What is 2 + 2?",
+      options: ["3", "4", "5", "6"],
+      answer: "4"
+    },
+    {
+      question: "What is the largest planet in our solar system?",
+      options: ["Earth", "Mars", "Jupiter", "Saturn"],
+      answer: "Jupiter"
+    },
+    {
+      question: "What is the boiling point of water?",
+      options: ["90°C", "100°C", "110°C", "120°C"],
+      answer: "100°C"
+    },
+    {
+      question: "Who wrote 'To Kill a Mockingbird'?",
+      options: ["Harper Lee", "Mark Twain", "Ernest Hemingway", "F. Scott Fitzgerald"],
+      answer: "Harper Lee"
+    },
+    {
+      question: "What is the chemical symbol for gold?",
+      options: ["Au", "Ag", "Pb", "Fe"],
+      answer: "Au"
+    },
+    {
+      question: "What is the largest mammal?",
+      options: ["Elephant", "Blue Whale", "Giraffe", "Great White Shark"],
+      answer: "Blue Whale"
+    },
+    {
+      question: "What is the capital of Japan?",
+      options: ["Seoul", "Beijing", "Tokyo", "Bangkok"],
+      answer: "Tokyo"
+    },
+    {
+      question: "What is the hardest natural substance on Earth?",
+      options: ["Gold", "Iron", "Diamond", "Quartz"],
+      answer: "Diamond"
+    },
+    {
+      question: "Who painted the Mona Lisa?",
+      options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+      answer: "Leonardo da Vinci"
+    },
+    {
+      question: "What is the smallest country in the world?",
+      options: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+      answer: "Vatican City"
+    },
+    {
+      question: "What is the main ingredient in guacamole?",
+      options: ["Tomato", "Avocado", "Pepper", "Onion"],
+      answer: "Avocado"
+    },
+    {
+      question: "What is the largest ocean on Earth?",
+      options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+      answer: "Pacific Ocean"
+    },
+    {
+      question: "What is the capital of Italy?",
+      options: ["Venice", "Florence", "Rome", "Milan"],
+      answer: "Rome"
+    },
+    {
+      question: "What is the primary language spoken in Brazil?",
+      options: ["Spanish", "Portuguese", "English", "French"],
+      answer: "Portuguese"
+    },
+    {
+      question: "What is the largest desert in the world?",
+      options: ["Sahara", "Arabian", "Gobi", "Kalahari"],
+      answer: "Sahara"
+    }
+  ];
+
+  let score = 0;
+  let currentQuestionIndex = 0;
+  let timeleft = 10;
+  let timer;
+  let questions = [];
+
+  function fetchData() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(quizdata);
+      }, 500);
+    });
+  }
+
+  async function startQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    document.getElementById("score").innerText = score;
+    questions = await fetchData();
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+      endQuiz();
+      return;
+    }
+
+    const current = questions[currentQuestionIndex];
+    document.getElementById("question").innerText = current.question;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    current.options.forEach((option) => {
+      const button = document.createElement("button");
+      button.innerText = option;
+      button.className = "option";
+      button.onclick = () => checkAnswer(option, current.answer);
+      optionsDiv.appendChild(button);
+    });
+
+    timeleft = 10;
+    document.getElementById("timer").innerText = timeleft;
+    clearInterval(timer);
+    timer = setInterval(() => {
+      timeleft--;
+      document.getElementById("timer").innerText = timeleft;
+      if (timeleft === 0) {
+        clearInterval(timer);
+        nextQuestion();
+      }
+    }, 1000);
+  }
+
+  function checkAnswer(selected, correct) {
+    clearInterval(timer);
+    if (selected === correct) {
+      score++;
+      document.getElementById("score").innerText = score;
+    }
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+  }
+
+  function endQuiz() {
+    clearInterval(timer);
+    alert(`Quiz over! Your score is ${score}`);
+    let pastScore = JSON.parse(localStorage.getItem('quizScores')) || [];
+    pastScore.push(score);
+    localStorage.setItem('quizScores', JSON.stringify(pastScore));
+  }
+
+  function viewScore() {
+    let pastScore = JSON.parse(localStorage.getItem('quizScores')) || [];
+    alert(`Your past scores: ${pastScore.join(', ')}`);
+  }
+</script>
+</body>
+</html>
