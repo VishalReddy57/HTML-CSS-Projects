@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grid Layout</title>
+  <style>
+   *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family:'Arial Narrow', Arial, sans-serif;
+    display: grid;
+    background-color: aliceblue;
+    height: 100vh;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: 100px 1fr 70px;
+    grid-template-areas:
+     "head head head"
+     "side main extra"
+     "footer footer footer";
+     gap:15px;
+     padding: 10px;
+     background-color: #f4f4f4;
+}
+.header{
+    grid-area: head;
+    background-color: lawngreen;
+    color: black;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar{
+    grid-area: side;
+    background: #ba8888;
+    padding: 10px;
+    color: rgb(253,248,248);
+    font-size: 40px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-content{
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    grid-template-rows: minmax(100px,auto);
+    gap: 10px;
+}
+.cell{
+    background-color: rgb(224,217,217);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.extra{
+    grid-area: extra;
+    background-color: rgb(189,61,61);
+    padding: 10px;
+    color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    text-align: center;
+}
+.footer{
+    grid-area: footer;
+    background: bisque;
+    color: blue;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+   
+  </style>
+</head>
+<body>
+   <header class="header">Header</header>
+    <nav class="sidebar" >Sidebar</nav>
+    <main class="main-content">
+        <div class="cell">grid 1</div>
+        <div class="cell">grid 2</div>
+        <div class="cell">grid 3</div>
+        <div class="cell">grid 4</div>
+        <div class="cell">grid 5</div>
+        <div class="cell">grid 6</div>                
+    </main>
+    <aside class="extra">Extra section</aside>
+    <footer class="footer">Footer</footer>
+</body>
+</html>
