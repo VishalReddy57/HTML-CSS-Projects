@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Showroom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            background-color: #222;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            font-weight: bold;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: #ff6347;
+        }
+
+        section {
+            padding: 100px 20px 50px;
+        }
+
+        #home {
+            background: url(motogp.jpg) no-repeat center center/cover;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #bike-specs {
+            background-color: #f4f4f4;
+        }
+
+        .bike {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .bike img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        #available-bikes {
+            padding: 40px;
+            background: #f8f9f8;
+        }
+
+        #available-bikes h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #search {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+        }
+
+        #bike-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .bike-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .bike-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        #contact {
+            background-color: #eee;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #ff6347;
+        }
+
+        #thankyou {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        #cart-items {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#available-bikes">About</a>
+        <a href="#bike-specs">Specifications</a>
+        <a href="#videos">Videos</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="home">
+        <h1>Welcome to Our Bike Showroom</h1>
+        <p>Explore our latest models and find your perfect ride!</p>
+    </section>
+
+    <section id="bike-specs">
+        <h2>Bikes Collections</h2>
+        <div class="bikes">
+            <div class="bike">
+                <img src="bullet.jpeg" alt="Electra 350">
+                <h3>Electra 350</h3>
+                <p>Rs. 1,50,000</p>
+                <button onclick="addToCart('Electra 350')">Add To Cart</button>
+            </div>
+            <div class="bike">
+                <img src="speed400.jpeg" alt="Speed 400">
+                <h3>Speed 400</h3>
+                <p>Rs. 3,00,000</p>
+                <button onclick="addToCart('Speed 400')">Add To Cart</button>
+            </div>
+            <div class="bike">
+                <img src="dominar.jpg" alt="Dominar 400">
+                <h3>Dominar 400</h3>
+                <p>Rs. 3,10,000</p>
+                <button onclick="addToCart('Dominar 400')">Add To Cart</button>
+            </div>
+            <div class="bike">
+                <img src="himalayan.jpeg" alt="Himalayan">
+                <h3>Himalayan</h3>
+                <p>Rs. 3,50,000</p>
+                <button onclick="addToCart('Himalayan')">Add To Cart</button>
+            </div>
+            <div class="bike">
+                <img src="zx10r.jpg" alt="Ninja Zx10r">
+                <h3>Ninja Zx10r</h3>
+                <p>Rs. 20,00,000</p>
+                <button onclick="addToCart('Ninja Zx10r')">Add To Cart</button>
+            </div>
+            <div class="bike">
+                <img src="s1000rr.jpeg" alt="BMW s1000rr">
+                <h3>BMW s1000rr</h3>
+                <p>Rs. 30,00,000</p>
+                <button onclick="addToCart('BMW s1000rr')">Add To Cart</button>
+            </div>
+        </div>
+        <h3 id="cart-items">Cart: Empty</h3>
+    </section>
+
+    <section id="available-bikes">
+        <h2>Available Bikes</h2>
+        <input type="text" id="search" placeholder="Search for bikes...">
+        <div id="bike-list">
+            <div class="bike-card" data-name="Electra 350">
+                <img src="bullet.jpeg" alt="Electra 350">
+                <h3>Electra 350</h3>
+                <p>Rs. 1,50,000</p>
+            </div>
+            <div class="bike-card" data-name="Speed 400">
+                <img src="speed400.jpeg" alt="Speed 400">
+                <h3>Speed 400</h3>
+                <p>Rs. 3,00,000</p>
+            </div>
+            <div class="bike-card" data-name="Dominar 400">
+                <img src="dominar.jpg" alt="Dominar 400">
+                <h3>Dominar 400</h3>
+                <p>Rs. 3,10,000</p>
+            </div>
+            <div class="bike-card" data-name="Himalayan">
+                <img src="himalayan.jpeg" alt="Himalayan">
+                <h3>Himalayan</h3>
+                <p>Rs. 3,50,000</p>
+            </div>
+            <div class="bike-card" data-name="Ninja Zx10r">
+                <img src="zx10r.jpg" alt="Ninja Zx10r">
+                <h3>Ninja Zx10r</h3>
+                <p>Rs. 20,00,000</p>
+            </div>
+            <div class="bike-card" data-name="BMW s1000rr">
+                <img src="s1000rr.jpeg" alt="BMW s1000rr">
+                <h3>BMW s1000rr</h3>
+                <p>Rs. 30,00,000</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form id="contactform">
+            <input type="text" id="name" placeholder="Enter Name">
+            <input type="email" id="email" placeholder="Enter Email">
+            <input type="text" id="phone" placeholder="Enter Your Phone Number">
+            <textarea id="message" placeholder="Enter Your Message"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <div id="thankyou">
+        <h2>Thank You for Visiting Our Showroom!</h2>
+        <p>We hope you found the perfect bike. For more information, feel free to contact us.</p>
+    </div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(bikeName) {
+            cart.push(bikeName);
+            document.getElementById("cart-items").innerText = "Cart: " + cart.join(", ");
+        }
+
+        document.getElementById("search").addEventListener("keyup", function () {
+            let filter = this.value.toLowerCase();
+            let bikes = document.querySelectorAll(".bike-card");
+            bikes.forEach(bike => {
+                let bikeName = bike.getAttribute("data-name").toLowerCase();
+                bike.style.display = bikeName.includes(filter) ? "block" : "none";
+            });
+        });
+
+        document.getElementById("contactform").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let message = document.getElementById("message").value.trim();
+
+            if (!name || !email || !phone || !message) {
+                alert("Please fill in all fields.");
+                return;
+            }
+            if (!email.includes("@") || !email.includes(".")) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+            if (phone.length < 10 || isNaN(phone)) {
+                alert("Please enter a valid phone number.");
+                return;
+            }
+
+            alert("Message sent successfully!");
+            this.reset();
+        });
+    </script>
+</body>
+</html>
